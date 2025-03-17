@@ -1,0 +1,26 @@
+name: Auto Push to GitHub
+
+on:
+  push:
+    branches:
+      - main  # Change to your branch if needed
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Commit and Push Changes
+        run: |
+          git add .
+          git commit -m "Automated commit: Updated files" || echo "No changes to commit"
+          git push
